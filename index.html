@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Something big is coming</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+    :root{
+        --irish-blue:#123C69;
+        --irish-gold:#C8A34D;
+        --irish-green:#1E5C19;
+        --light:#FFD700;
+        --white:#1E5C19;
+    }
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    body{
+        font-family:'Inter', sans-serif;
+        background:
+            linear-gradient(rgba(18,60,105,0.9), rgba(18,60,105,0.95)),
+            url('https://upload.wikimedia.org/wikipedia/commons/0/03/Harp_of_the_Irish_Government.png');
+        background-size: 350px;
+        background-repeat:no-repeat;
+        background-position:right 40px bottom 40px;
+        color:var(--white);
+        min-height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:40px;
+    }
+
+    .container{
+        background:rgba(255,255,255,0.08);
+        backdrop-filter: blur(10px);
+        border:1px solid rgba(255,255,255,0.15);
+        border-radius:24px;
+        padding:50px;
+        width:100%;
+        max-width:900px;
+        text-align:center;
+        box-shadow:0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    .logo{
+        width:90px;
+        margin-bottom:20px;
+        opacity:0.95;
+    }
+
+    h1{
+        font-size:2.7rem;
+        font-weight:700;
+        margin-bottom:12px;
+        font-family:'Lato', sans-serif;
+    }
+
+    .subtitle{
+        color:#1E5C19;
+        margin-bottom:50px;
+        font-size:1.1rem;
+        font-family:'Lato', sans-serif;
+    }
+
+    .countdown{
+        display:grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap:20px;
+    }
+
+    .time-box{
+        background:rgba(255,255,255,0.08);
+        border:1px solid rgba(255,255,255,0.15);
+        border-radius:18px;
+        padding:30px 20px;
+    }
+
+    .number{
+        font-size:6rem;
+        font-weight:700;
+        color:var(--irish-gold);
+    }
+
+    .label{
+        margin-top:8px;
+        text-transform:uppercase;
+        letter-spacing:2px;
+        font-size:0.85rem;
+        opacity:0.8;
+    }
+
+    .footer{
+        margin-top:45px;
+        font-size:0.95rem;
+        color:#dbe7f3;
+
+        
+    }
+
+    .dfa-logo{
+    
+        width:220px;
+        height:auto;
+        opacity:0.95;
+        margin-top:10px;
+    }
+
+    .irish-line{
+        width:100px;
+        height:4px;
+        margin:25px auto;
+        background:linear-gradient(
+            to right,
+            var(--irish-green),
+            white,
+            #FF883E
+        );
+        border-radius:20px;
+    }
+
+    @media(max-width:768px){
+        .countdown{
+            grid-template-columns: repeat(2,1fr);
+        }
+
+        h1{
+            font-size:2rem;
+        }
+    }
+
+    @media(max-width:480px){
+        .countdown{
+            grid-template-columns:1fr;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <img
+        class="logo"
+        src="Harp.svg"
+        alt="Irish Government Harp"
+    >
+
+    <h1>Something big is coming</h1>
+
+    <div class="irish-line"></div>
+
+    <p class="subtitle">
+        Countdown to 1 July
+    </p>
+
+    <div class="countdown">
+
+        <div class="time-box">
+            <div class="number" id="days">00</div>
+            <div class="label">Days</div>
+        </div>
+
+        <div class="time-box">
+            <div class="number" id="hours">00</div>
+            <div class="label">Hours</div>
+        </div>
+
+        <div class="time-box">
+            <div class="number" id="minutes">00</div>
+            <div class="label">Minutes</div>
+        </div>
+
+        <div class="time-box">
+            <div class="number" id="seconds">00</div>
+            <div class="label">Seconds</div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <img src="DFA.png" class="dfa-logo" alt="Department of Foreign Affairs Logo">    </div>
+
+</div>
+
+<script>
+
+const targetDate = new Date("July 1, 2026 00:00:00").getTime();
+
+function updateCountdown(){
+
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerHTML = days;
+    document.getElementById("hours").innerHTML = hours;
+    document.getElementById("minutes").innerHTML = minutes;
+    document.getElementById("seconds").innerHTML = seconds;
+
+    if(distance < 0){
+        document.querySelector(".countdown").innerHTML =
+            "<h2>The Presidency Has Begun</h2>";
+    }
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+</script>
+
+</body>
+</html>
